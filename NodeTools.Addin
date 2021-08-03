@@ -1,0 +1,15 @@
+﻿<?xml version="1.0" encoding="utf-8" standalone="no"?>
+<RevitAddIns>
+	
+	<AddIn Type="Application">
+		<Name>ApplicationPlugin</Name>
+		<Assembly>NodeTools.dll</Assembly>
+		<AddInId>
+			8b49602e-863f-4bcc-ae6e-3eb973855679
+		</AddInId>
+		<FullClassName>NodeTools.App</FullClassName>
+		<VendorId>Angelo</VendorId>
+		<VendorDescription>Angelo</VendorDescription>
+    <VisibilityMode>NotVisibleWhenNoActiveDocument</VisibilityMode>
+	</AddIn>
+</RevitAddIns>
