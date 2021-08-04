@@ -14,6 +14,28 @@
         <Setter Property="IsSelected" Value="{Binding IsChecked}"/>
     </Style>
 
+   <!--Listbox for groups-->
+    <!--Listbox item template and style for groups-->
+    <DataTemplate x:Key="ListboxItemTempGrp">
+        <StackPanel  Orientation="Horizontal">
+            <CheckBox IsChecked="{Binding Path=IsSelected, 
+      RelativeSource={RelativeSource FindAncestor, AncestorType={x:Type ListBoxItem}}}"/>
+            <TextBlock Padding="2,0,0,0" Text="{Binding Path=Name}"/>
+            <TextBlock Padding="2,0,0,0" Text="{Binding Path=Count, StringFormat=' [ {0} ]'}">
+                <TextBlock.Style>
+                    <Style>
+                        <Setter Property="TextBlock.Foreground" Value="red" />
+                        <Setter Property="TextBlock.FontWeight" Value="Bold" />
+                    </Style>
+                </TextBlock.Style>
+            </TextBlock>
+        </StackPanel>
+    </DataTemplate>
+    <Style x:Key="ListBoxItemContainerGrp" TargetType="{x:Type ListBoxItem}">
+        <Setter Property="IsSelected" Value="{Binding IsChecked}"/>
+    </Style>
+    
+   
     
     <!--Close button hower style-->
     <Style x:Key="CloseButton" TargetType="Button">

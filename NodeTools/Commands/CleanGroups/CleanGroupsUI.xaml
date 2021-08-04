@@ -32,11 +32,11 @@
                     <RowDefinition Height="*"></RowDefinition>
                     <RowDefinition Height="60"/>
                 </Grid.RowDefinitions>
+                <ListBox x:Name="GroupUi" ItemsSource="{Binding}" Grid.Row="0" SelectionMode="Extended" Background="#FFFCFCFC" Margin="0,50,0,0" ItemTemplate="{StaticResource ListboxItemTempGrp}" ItemContainerStyle="{StaticResource ListBoxItemContainerGrp}"/>
 
 
-
-                <Button x:Name="Delete_Button" Grid.Row="1" Content="Delete" Width="90" Height="25" HorizontalAlignment="Right" Margin="0,17.8,11,17.2" Click="Delete_Click"/>
-                <Button x:Name="Cancel_Button" Content="Cancel" Grid.Row="1" Width="90" Height="25" Click="Cancel_Clicked" Margin="102,17.8,128,17.2"/>
+                <Button x:Name="Delete_Button" Grid.Row="1" Content="Delete Selected" Width="90" Height="25" HorizontalAlignment="Right" Margin="0,17.8,11,17.2" Click="Delete_Click"/>
+                <Button x:Name="Cancel_Button" Content="Delete Unused" Grid.Row="1" Width="90" Height="25" Click="Unused_Clicked" Margin="102,17.8,128,17.2"/>
             </Grid>
         </Border>
     </Grid>

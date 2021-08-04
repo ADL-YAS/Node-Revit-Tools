@@ -31,7 +31,6 @@ namespace NodeTools.Commands.RemoveDuplicateDimension
             List<DimensionType> dimensionTypes = new DimensionTypeProcessor(doc).DocDimTypes;
             DocsDimTypeIds = dimensionTypes.Select(x => x.Id).ToList();
             int initialDimInstanceCount = dimensions.Count();
-            bool prompt = false;
             IEnumerable<IGrouping<string,Dimension>> dimensionDimTypeGroup = dimensions.GroupBy(RemoveNonPrintableChar);
 
             //taskdialog menu
@@ -42,19 +41,8 @@ namespace NodeTools.Commands.RemoveDuplicateDimension
             td.AddCommandLink(TaskDialogCommandLinkId.CommandLink1, "Purge unused with dependents","If unused Dimension type has dependent Dimension type that is used in the drawings, all of it's instance will also gets deleted");
             td.AddCommandLink(TaskDialogCommandLinkId.CommandLink2, "Purge unused without dependents","This will delete only those Dimension type that doesn't have dependents resulting of some Dimension type that has duplicate name may get's retain");
 
-            switch (td.Show())
-            {
-                case TaskDialogResult.CommandLink1:
-                    prompt = true;
-                    break;
 
-                case TaskDialogResult.CommandLink2:
-                    prompt = false;
-                    break;
-                default:
-                    // handle any other case.
-                    break;
-            }
+            bool prompt = false;
             using (Transaction tr = new Transaction(doc, "Remove Unuse and Duplicate"))
             {
                 tr.Start();
@@ -67,15 +55,21 @@ namespace NodeTools.Commands.RemoveDuplicateDimension
 
                 List<ElementId> selectedIdsTodelete = GetValidUnusedTodelete(unusedIds);
 
-                if (prompt)
+
+                switch (td.Show())
                 {
-                    //delete all unused but other used dimtype that has dependency to one of id to delete will also get deleted
-                    Delete(unusedIds);
-                }
-                else
-                {
-                    //will try to remove duplicate and unused ids which all the used dimtype has no depenedency
-                    Delete(selectedIdsTodelete);
+                    case TaskDialogResult.Close:
+                        break;
+                    case TaskDialogResult.CommandLink1:
+                        Delete(unusedIds);
+                        prompt = true;
+                        break;
+                    case TaskDialogResult.CommandLink2:
+                        Delete(selectedIdsTodelete);
+                        break;
+                    default:
+                        // handle any other case.
+                        break;
                 }
                 tr.Commit();
             }
