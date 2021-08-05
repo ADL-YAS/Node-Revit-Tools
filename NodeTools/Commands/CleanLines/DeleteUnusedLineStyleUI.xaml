@@ -5,10 +5,10 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NodeTools.Commands.CleanLines"
         mc:Ignorable="d"
-        Height="515" Width="340" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontFamily="Arial Narrow" FontSize="13"
+        Height="470" Width="320" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontFamily="Arial Narrow" FontSize="13"
         WindowStyle="None" Background="#F0F0F0">
-    
-    
+
+
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="30"/>
     </WindowChrome.WindowChrome>
@@ -19,7 +19,7 @@
         <Grid VerticalAlignment="Top"  Height="30" Background="#384F79">
             <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center"  Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Foreground="white" Margin=" 20,0,0,0" FontSize="14">Delete Unused Line Styles</TextBlock>
-                <Button Margin="145,0,0,0" Height="30" Width="40" Click="Close_Click" Style="{StaticResource CloseButton}">
+                <Button Margin="125,0,0,0" Height="30" Width="40" Click="Close_Click" Style="{StaticResource CloseButton}">
                     <Button.Background>
                         <ImageBrush ImageSource="pack://application:,,,/NodeTools;component/Resources/WhiteX.png"/>
                     </Button.Background>
@@ -30,18 +30,18 @@
             <Grid>
                 <Grid.ColumnDefinitions>
                     <ColumnDefinition Width="*"></ColumnDefinition>
-                    <ColumnDefinition Width="100"/>
+                    <ColumnDefinition Width="90"/>
                 </Grid.ColumnDefinitions>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
                 <ListBox x:Name="UILineStyle" Grid.Column="0" ItemsSource="{Binding}" Grid.Row="0" SelectionMode="Extended" Background="#FFFCFCFC" Margin="0,50,0,0" ItemTemplate="{StaticResource ListboxItemTemp}" ItemContainerStyle="{StaticResource ListBoxItemContainer}"/>
 
-                <Button x:Name="Check_All" Grid.Column="1" Grid.Row="0" Content="Check all" Width="90" Height="25" VerticalAlignment="Top" Margin="0.4,93,-0.4,0" Click="CheckAll_Click"/>
-                <Button x:Name="Uncheck_All" Grid.Column="1" Grid.Row="0" Content="UnCheck all" Width="90" Height="25" VerticalAlignment="Top" Margin="0.4,143,-0.4,0" Click="UnChecked_Click" />
-                <Button x:Name="Delete_Button" Grid.Column="0" Grid.Row="1" Content="Delete" Width="90" Height="25" HorizontalAlignment="Right" Margin="0,0,20,0" Click="Delete_Click"/>
-                <Button x:Name="Cancel_Button" Content="Cancel" Grid.Column="1" Grid.Row="1" Width="90" Height="25" Click="Cancel_Clicked"/>
+                <Button x:Name="Check_All" Grid.Column="1" Grid.Row="0" Content="Check all" Width="70" Height="20" VerticalAlignment="Top" Margin="10.6,75,9,0" Click="CheckAll_Click"/>
+                <Button x:Name="Uncheck_All" Grid.Column="1" Grid.Row="0" Content="Uncheck all" Width="70" Height="20" VerticalAlignment="Top" Margin="10.6,107,9,0" Click="UnChecked_Click" />
+                <Button x:Name="Delete_Button" Grid.Column="0" Grid.Row="1" Content="Delete" Width="90" Height="20" HorizontalAlignment="Right" Margin="0,21,9.4,9.4" Click="Delete_Click"/>
+                <Button x:Name="Cancel_Button" Content="Cancel" Grid.Row="1" Width="90" Height="20" Click="Cancel_Clicked" Grid.ColumnSpan="2" Margin="210,21,0,9.4"/>
             </Grid>
         </Border>
     </Grid>

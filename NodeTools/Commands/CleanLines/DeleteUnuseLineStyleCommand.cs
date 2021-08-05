@@ -50,7 +50,7 @@ namespace NodeTools.Commands.CleanLines
             }
             else
             {
-                TaskDialog.Show("Info", "No Unused Line Style found");
+                TaskDialog.Show("Info", "No unused Line Style found");
                 return Result.Cancelled;
             }
 

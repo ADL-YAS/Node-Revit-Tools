@@ -5,7 +5,7 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:NodeTools.Commands.CleanGroups"
         mc:Ignorable="d"
-       Height="515" Width="340" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontFamily="Arial Narrow" FontSize="13"
+       Height="470" Width="320" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontFamily="Arial Narrow" FontSize="13"
         WindowStyle="None" Background="#F0F0F0">
 
 
@@ -19,7 +19,7 @@
         <Grid VerticalAlignment="Top"  Height="30" Background="#384F79">
             <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center"  Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Foreground="white" Margin=" 20,0,0,0" FontSize="14">Groups List</TextBlock>
-                <Button Margin="223,0,0,0" Height="30" Width="40" Click="Close_Click" Style="{StaticResource CloseButton}">
+                <Button Margin="200,0,0,0" Height="30" Width="40" Click="Close_Click" Style="{StaticResource CloseButton}">
                     <Button.Background>
                         <ImageBrush ImageSource="pack://application:,,,/NodeTools;component/Resources/WhiteX.png"/>
                     </Button.Background>
@@ -30,13 +30,21 @@
             <Grid>
                 <Grid.RowDefinitions>
                     <RowDefinition Height="*"></RowDefinition>
-                    <RowDefinition Height="60"/>
+                    <RowDefinition Height="50"/>
                 </Grid.RowDefinitions>
-                <ListBox x:Name="GroupUi" ItemsSource="{Binding}" Grid.Row="0" SelectionMode="Extended" Background="#FFFCFCFC" Margin="0,50,0,0" ItemTemplate="{StaticResource ListboxItemTempGrp}" ItemContainerStyle="{StaticResource ListBoxItemContainerGrp}"/>
+                <TabControl Margin=" 0,50,0,0">
+                    <TabItem x:Name="Detail_Tab" Header="Details" >
+                        <ListBox x:Name="DetailGroupUI" ItemsSource="{Binding}" Grid.Row="0" SelectionMode="Extended" Background="#FFFCFCFC" ItemTemplate="{StaticResource ListboxItemTempGrp}" ItemContainerStyle="{StaticResource ListBoxItemContainerGrp}"/>
+                    </TabItem>
+                    <TabItem x:Name="Models_Tab" Header="Models" >
+                        <ListBox x:Name="ModelGroupUI" ItemsSource="{Binding}" Grid.Row="0" SelectionMode="Extended" Background="#FFFCFCFC" ItemTemplate="{StaticResource ListboxItemTempGrp}" ItemContainerStyle="{StaticResource ListBoxItemContainerGrp}"/>
+                    </TabItem>
+                </TabControl>
+               
 
 
-                <Button x:Name="Delete_Button" Grid.Row="1" Content="Delete Selected" Width="90" Height="25" HorizontalAlignment="Right" Margin="0,17.8,11,17.2" Click="Delete_Click"/>
-                <Button x:Name="Cancel_Button" Content="Delete Unused" Grid.Row="1" Width="90" Height="25" Click="Unused_Clicked" Margin="102,17.8,128,17.2"/>
+                <Button x:Name="Delete_Button" Grid.Row="1" Content="Delete Selected" Width="90" Height="20" HorizontalAlignment="Right" Margin="0,21,11,9.4" Click="Delete_Click" RenderTransformOrigin="0.462,1"/>
+                <Button x:Name="Cancel_Button" Content="Delete Unused" Grid.Row="1" Width="90" Height="20" Click="Unused_Clicked" Margin="100,21,110,9.4"/>
             </Grid>
         </Border>
     </Grid>

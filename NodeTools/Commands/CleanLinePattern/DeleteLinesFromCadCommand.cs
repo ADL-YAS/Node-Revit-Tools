@@ -52,7 +52,7 @@ namespace NodeTools.Commands.CleanLinePattern
                 }
                 else
                 {
-                    TaskDialog.Show("Info", "There is no Cad lines found");
+                    TaskDialog.Show("Info", "No Cad lines found");
                     return Result.Cancelled;
                 }
                 

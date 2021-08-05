@@ -27,7 +27,8 @@ namespace NodeTools.Commands.CleanGroups
     public partial class CleanGroupsUI : Window
     {
         Document _doc;
-        public ObservableCollection<GroupCustomObj> Groups { get; private set; }
+        public ObservableCollection<GroupCustomObj> DetailGroups { get; private set; }
+        public ObservableCollection<GroupCustomObj> ModelGroups { get; private set; }
         public CleanGroupsUI(Document doc, List<GroupType> gtypes)
         {
             InitializeComponent();
@@ -36,39 +37,78 @@ namespace NodeTools.Commands.CleanGroups
             _doc = doc;
             
            
-            var list = gtypes.Select(x => new GroupCustomObj() { Name = x.Name, id = x.Id, Count = x.Groups.Size }).OrderBy(x=>x.Name).ToList();
-            Groups = new ObservableCollection<GroupCustomObj>(list);
-            GroupUi.ItemsSource = Groups;
+            var dlist = gtypes.Where(g=>g.FamilyName == "Detail Group").Select(x => new GroupCustomObj() { Name = x.Name, id = x.Id, Count = x.Groups.Size, FamilyName = x.FamilyName }).OrderBy(x=>x.Name).ToList();
+            var mlist = gtypes.Where(g => g.FamilyName == "Model Group").Select(x => new GroupCustomObj() { Name = x.Name, id = x.Id, Count = x.Groups.Size, FamilyName = x.FamilyName }).OrderBy(x => x.Name).ToList();
+            DetailGroups = new ObservableCollection<GroupCustomObj>(dlist);
+            ModelGroups = new ObservableCollection<GroupCustomObj>(mlist);
+
+
+            if (DetailGroups.Count == 0)
+            {
+                Detail_Tab.IsEnabled = false;
+            }
+            else
+            {
+                DetailGroupUI.ItemsSource = DetailGroups;
+            }
+            if (ModelGroups.Count == 0)
+            {
+                Models_Tab.IsEnabled = false;
+            }
+            else
+            {
+                ModelGroupUI.ItemsSource = ModelGroups;
+            }
         }
       
         private void Delete_Click(object sender, RoutedEventArgs e)
         {
-            var toDelete = Groups.Where(x => x.IsChecked == true).ToList();
-            if (toDelete.Count != 0)
+            List<GroupCustomObj> list = new List<GroupCustomObj>();
+            var detailtoDelete = DetailGroups.Where(x => x.IsChecked == true).ToList();
+            var modeltoDelete = ModelGroups.Where(x => x.IsChecked == true).ToList();
+            if (detailtoDelete.Count != 0)
             {
-                Delete(toDelete);
+                list.AddRange(detailtoDelete);
+            }
+            if(modeltoDelete.Count != 0)
+            {
+                list.AddRange(modeltoDelete);
+            }
+            if(list.Count != 0)
+            {
+                Delete(list);
             }
             else
             {
-                TaskDialog.Show("Info", "No item selected");
+                TaskDialog.Show("Info", "No items selected");
             }
            
         }
 
         private void Unused_Clicked(object sender, RoutedEventArgs e)
         {
-            var toDelete = Groups.Where(x => x.Count == 0).ToList();
-            if(toDelete.Count != 0)
+            List<GroupCustomObj> list = new List<GroupCustomObj>();
+            var modeltoDelete = ModelGroups.Where(x => x.Count == 0).ToList();
+            var detailtoDelete = DetailGroups.Where(x => x.Count == 0).ToList();
+            if (detailtoDelete.Count != 0)
             {
-                Delete(toDelete);
+                list.AddRange(detailtoDelete);
+            }
+            if (modeltoDelete.Count != 0)
+            {
+                list.AddRange(modeltoDelete);
+            }
+            if (list.Count != 0)
+            {
+                Delete(list);
             }
             else
             {
-                TaskDialog.Show("Info", "No unused found");
+                TaskDialog.Show("Info", "No unused groups");
             }
-           
-        }
 
+
+        }
         void Delete(List<GroupCustomObj> objs)
         {
             using(Transaction tr = new Transaction(_doc,"Delete Groups"))
@@ -79,7 +119,14 @@ namespace NodeTools.Commands.CleanGroups
                     foreach (var item in objs)
                     {
                         _doc.Delete(item.id);
-                        Groups.Remove(item);
+                        if(item.FamilyName == "Detail Group")
+                        {
+                            DetailGroups.Remove(item);
+                        }
+                        else
+                        {
+                            ModelGroups.Remove(item);
+                        }
                     }
                 }
                 catch
@@ -88,7 +135,7 @@ namespace NodeTools.Commands.CleanGroups
                 }
                 tr.Commit();
                 TaskDialog.Show("Info", $"{objs.Count} items deleted");
-                if(Groups.Count == 0)
+                if (DetailGroups.Count == 0 && ModelGroups.Count == 0)
                 {
                     this.Close();
                 }
@@ -114,6 +161,7 @@ namespace NodeTools.Commands.CleanGroups
     {
         public event PropertyChangedEventHandler PropertyChanged;
         public ElementId id { get; set; }
+        public string FamilyName { get; set; }
         public string  Name { get; set; }
         public bool IsChecked { get; set; }
         public int Count { get; set; }
