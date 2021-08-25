@@ -17,6 +17,7 @@ using System.Windows.Shapes;
 using System.IO;
 using System.Collections.ObjectModel;
 using System.Text.RegularExpressions;
+using System.Windows.Threading;
 
 namespace NodeTools.Commands.CleanDimension
 {
@@ -114,18 +115,18 @@ namespace NodeTools.Commands.CleanDimension
 
         private void Cancel_Clicked(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            AnimateClose();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            AnimateClose();
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                this.Close();
+                AnimateClose();
         }
 
 
@@ -163,7 +164,7 @@ namespace NodeTools.Commands.CleanDimension
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
 
-            this.Close();
+            AnimateClose();
             if (NodeSelectedDimTypes.Count() != 0)
             {
                 using(Transaction tr = new Transaction(_doc,"Node Replace DimensionType"))
@@ -282,38 +283,16 @@ namespace NodeTools.Commands.CleanDimension
             DataStorageGenerator.SetDataToStorage(_doc, GUID, storageName, fieldName, dict);
         }
 
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => WindowStyle = WindowStyle.None));
+        }
 
-        //void ReadFromfile()
-        //{
-        //    // Fullpath. You can direct hardcode it if you like.  
-        //    string fullPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"NodeTools\");
-
-        //    try
-        //    {
-        //        if (Directory.Exists(fullPath))
-        //        {
-        //            string[] data = File.ReadAllLines(fullPath + "Node Dimention Types.txt");
-
-        //            foreach (string item in data)
-        //            {
-        //                ElementId id = new ElementId(Convert.ToInt32(item));
-        //                DimTypeCustomObj obj = Used_Dimtypes.Where(x => x.EleId == id).FirstOrDefault();
-        //                Node_Dimtypes.Add(obj);
-        //            }
-        //        }
-        //        else
-        //        {
-        //            TaskDialog.Show("Failed", "File not found in Node tools document directory");
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-
-        //    // Read a file  
-        //    //string readText = File.ReadAllText(fullPath);
-        //    //Console.WriteLine(readText);
-        //}
+        private void AnimateClose()
+        {
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            this.Close();
+        }
+       
     }
 }

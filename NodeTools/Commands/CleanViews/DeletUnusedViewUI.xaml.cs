@@ -11,6 +11,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using NodeTools.Utility;
@@ -205,7 +206,7 @@ namespace NodeTools.Commands.CleanViews
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                this.Close();
+                AnimateClose();
         }
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
@@ -250,7 +251,7 @@ namespace NodeTools.Commands.CleanViews
                             if (tr.Commit() == TransactionStatus.Committed)
                             {
                                 DialogResult = true;
-                                this.Close();
+                                AnimateClose();
                                 var format = toDeleteIds.Count() == 1 ? "View" : "Views";
                                 TaskDialog.Show("Result", $"{toDeleteIds.Count()} {format} deleted");
                             }
@@ -270,7 +271,7 @@ namespace NodeTools.Commands.CleanViews
             else
             {
                 TaskDialog.Show("Result", "No item selected");
-                this.Close();
+                AnimateClose();
             }
             
 
@@ -329,11 +330,21 @@ namespace NodeTools.Commands.CleanViews
 
         private void Cancel_Clicked(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            AnimateClose();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
+            AnimateClose();
+        }
+
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => WindowStyle = WindowStyle.None));
+        }
+        private void AnimateClose()
+        {
+            WindowStyle = WindowStyle.SingleBorderWindow;
             this.Close();
         }
     }

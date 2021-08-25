@@ -14,6 +14,7 @@ using System.Windows.Input;
 using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 using Autodesk.Revit.DB;
 using Autodesk.Revit.UI;
 using NodeTools.Utility;
@@ -94,55 +95,25 @@ namespace NodeTools.Commands.TextNoteTypes
 
         private void Cancel_Clicked(object sender, RoutedEventArgs e)
         {
-            this.Close();
+
+            AnimateClose();
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            AnimateClose();
         }
 
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                this.Close();
+                AnimateClose();
         }
 
 
-        //void WriteTofile(string[] array, string name)
-        //{
-        //    // Filename  
-        //    string fileName = $"{name}.txt";
-        //    // Fullpath. You can direct hardcode it if you like.  
-        //    string fullPath = System.IO.Path.Combine(Environment.GetFolderPath(Environment.SpecialFolder.MyDocuments), @"NodeTools\");
-
-        //    string[] info = array;
-
-        //    try
-        //    {
-        //        if (Directory.Exists(fullPath))
-        //        {
-        //            File.WriteAllLines(fullPath + fileName, info);
-        //        }
-        //        else
-        //        {
-        //            Directory.CreateDirectory(fullPath);
-        //            File.WriteAllLines(fullPath + fileName, info);
-        //        }
-        //    }
-        //    catch (Exception)
-        //    {
-        //        throw;
-        //    }
-
-        //    //Read a file
-        //    //string readText = File.ReadAllText(fullPath);
-        //    //Console.WriteLine(readText);
-        //}
-
         private void Accept_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            AnimateClose();
             if (NodeSelectedTextNoteTypes.Count() != 0)
             {
                 using (Transaction tr = new Transaction(_doc, "Node Replace TextNoteTypes"))
@@ -234,25 +205,6 @@ namespace NodeTools.Commands.TextNoteTypes
         }
 
 
-        //public void UngroupGroups()
-        //{
-        //    var groupsCol = new FilteredElementCollector(_doc).OfClass(typeof(Autodesk.Revit.DB.Group)).Cast<Autodesk.Revit.DB.Group>().ToList();
-        //    if (groupsCol.Count() != 0)
-        //    {
-        //        try
-        //        {
-        //            foreach (Autodesk.Revit.DB.Group item in groupsCol)
-        //            {
-        //                item.UngroupMembers();
-        //            }
-        //        }
-        //        catch 
-        //        {
-
-        //        }
-
-        //    }
-        //}
 
         public bool HasNonPrintableChar(string name)
         {
@@ -265,21 +217,15 @@ namespace NodeTools.Commands.TextNoteTypes
             return true;
         }
 
-
-        //public void AddDataToStorage(List<DimTypeCustomObj> dimTypeCustomObjs)
-        //{
-        //    Dictionary<string, string> dict;
-        //    try
-        //    {
-        //        dict = dimTypeCustomObjs.ToDictionary(k => k.Name, v => v.UniqueId);
-        //    }
-        //    catch (Exception e)
-        //    {
-        //        TaskDialog.Show("Info", "A dumplicate Dimension Type may have been added to Node List\ncommand will be aborted");
-        //        return;
-        //    }
-        //    DataStorageGenerator.SetDataToStorage(_doc, GUID, storageName, fieldName, dict);
-        //}
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => WindowStyle = WindowStyle.None));
+        }
+        private void AnimateClose()
+        {
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            this.Close();
+        }
 
     }
 }

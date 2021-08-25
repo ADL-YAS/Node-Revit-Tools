@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NodeTools.Commands.CleanViews"
         mc:Ignorable="d"
         Height="470" Width="340" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontFamily="Arial Narrow" FontSize="13"
-        WindowStyle="None" Background="#F0F0F0">
+         Background="#F0F0F0" Activated="Window_Activated">
     <WindowChrome.WindowChrome>
         <WindowChrome CaptionHeight="30"/>
     </WindowChrome.WindowChrome>

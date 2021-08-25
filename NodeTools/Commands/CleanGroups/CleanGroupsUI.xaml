@@ -6,7 +6,7 @@
         xmlns:local="clr-namespace:NodeTools.Commands.CleanGroups"
         mc:Ignorable="d"
        Height="470" Width="320" WindowStartupLocation="CenterScreen" ResizeMode="NoResize" FontFamily="Arial Narrow" FontSize="13"
-        WindowStyle="None" Background="#F0F0F0">
+        Activated="Window_Activated" Background="#F0F0F0">
 
 
     <WindowChrome.WindowChrome>
@@ -19,7 +19,7 @@
         <Grid VerticalAlignment="Top"  Height="30" Background="#384F79">
             <StackPanel WindowChrome.IsHitTestVisibleInChrome="True" VerticalAlignment="Center"  Orientation="Horizontal">
                 <TextBlock VerticalAlignment="Center" Foreground="white" Margin=" 20,0,0,0" FontSize="14">Groups List</TextBlock>
-                <Button Margin="200,0,0,0" Height="30" Width="40" Click="Close_Click" Style="{StaticResource CloseButton}">
+                <Button Margin="202,0,0,0" Height="30" Width="40" Click="Close_Click" Style="{StaticResource CloseButton}">
                     <Button.Background>
                         <ImageBrush ImageSource="pack://application:,,,/NodeTools;component/Resources/WhiteX.png"/>
                     </Button.Background>

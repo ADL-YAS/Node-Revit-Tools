@@ -18,6 +18,7 @@ using Autodesk.Revit.UI;
 using NodeTools.Utility;
 using System.Collections.ObjectModel;
 using System.ComponentModel;
+using System.Windows.Threading;
 
 namespace NodeTools.Commands.CleanGroups
 {
@@ -137,24 +138,33 @@ namespace NodeTools.Commands.CleanGroups
                 TaskDialog.Show("Info", $"{objs.Count} items deleted");
                 if (DetailGroups.Count == 0 && ModelGroups.Count == 0)
                 {
-                    this.Close();
+                    AnimateClose();
                 }
             }
         }
 
         private void Close_Click(object sender, RoutedEventArgs e)
         {
-            this.Close();
+            AnimateClose();
         }
         #region Key Press Event handlers
         private void HandleEsc(object sender, KeyEventArgs e)
         {
             if (e.Key == Key.Escape)
-                this.Close();
+                AnimateClose();
         }
 
         #endregion
 
+        private void Window_Activated(object sender, EventArgs e)
+        {
+            Dispatcher.BeginInvoke(DispatcherPriority.ApplicationIdle, new Action(() => WindowStyle = WindowStyle.None));
+        }
+        private void AnimateClose()
+        {
+            WindowStyle = WindowStyle.SingleBorderWindow;
+            this.Close();
+        }
     }
 
     public class GroupCustomObj : INotifyPropertyChanged
