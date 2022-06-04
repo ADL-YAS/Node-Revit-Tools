@@ -29,7 +29,7 @@ namespace NodeTools
         {
 
             var rc = RevitRibbonControl.RibbonControl;
-            var tab = rc.FindTab("NODE AEC");
+            var tab = rc.FindTab("Node AEC");
             tab.IsVisible = false; // or true
 
             tab.IsVisible = !e.Document.IsFamilyDocument;

@@ -48,7 +48,7 @@ namespace NodeTools.Commands.CleanSheets
                             catch { }
                         }
 
-                        TaskDialog.Show("Delete All Sheets", colCount.ToString() + " sheets were deleted.");
+                        TaskDialog.Show("Delete All Sheets", colCount.ToString() + " sheets will be deleted.");
                         tx.Commit();
                     }
                     return Result.Succeeded;

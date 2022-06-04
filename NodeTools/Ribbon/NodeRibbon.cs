@@ -13,7 +13,7 @@ namespace NodeTools.Ribbon
     {
         internal static void AddRibbonPanel(UIControlledApplication application)
         {
-            string TabName = "NODE AEC";
+            string TabName = "Node AEC";
 
             application.CreateRibbonTab(TabName);
 
@@ -28,6 +28,7 @@ namespace NodeTools.Ribbon
 
             #region Create Image for button
             BitmapImage UnUsedView_Image = new BitmapImage(new Uri("pack://application:,,,/NodeTools;component/Resources/UnusedView32x32.png"));
+            BitmapImage CLeanSheet_Image = new BitmapImage(new Uri("pack://application:,,,/NodeTools;component/Resources/CleanSheets32x32.png"));
             BitmapImage Groups_Image = new BitmapImage(new Uri("pack://application:,,,/NodeTools;component/Resources/Groups32x32.png"));
             //image for lines
             BitmapImage LinesPulldown_Image = new BitmapImage(new Uri("pack://application:,,,/NodeTools;component/Resources/LinesPullDownImage32x32.png"));
@@ -47,6 +48,7 @@ namespace NodeTools.Ribbon
 
             #region Create button data
             PushButtonData UnusedViewButtonData = new PushButtonData("UnusedViewButton", "Delete\nUnused Views", AssemblyPath, "NodeTools.Commands.CleanViews.DeleteUnusedViewsCommand");
+            PushButtonData CleanSheetButtonData = new PushButtonData("CleanSheetButton", "Delete\nSheets", AssemblyPath, "NodeTools.Commands.CleanSheets.CleanSheetsCommand");
             PushButtonData GroupsButtonData = new PushButtonData("GroupsButton", "Document Groups", AssemblyPath, "NodeTools.Commands.CleanGroups.CleanGroupsCommand");
             //lines commands
             PushButtonData UnusedLineStyleButtonData = new PushButtonData("UnusedLineStyleButton", "Delete\nUnused Line Styles", AssemblyPath, "NodeTools.Commands.CleanLines.DeleteUnuseLineStyleCommand");
@@ -61,12 +63,14 @@ namespace NodeTools.Ribbon
 
             #region Create push button from Pushbuttondata
             PushButton UnusedViewPushButton = CleanDocs_Panel.AddItem(UnusedViewButtonData) as PushButton;
+            PushButton CleanSheetPushButton = CleanDocs_Panel.AddItem(CleanSheetButtonData) as PushButton;
             PushButton PurgeDimtypeButton = CleanDocs_Panel.AddItem(PurgeDimtypeButtonData) as PushButton;
             PushButton GroupsButton = CleanDocs_Panel.AddItem(GroupsButtonData) as PushButton;
             #endregion
 
             #region ToolTips
             UnusedViewPushButton.ToolTip = "Delete all Views, Schedule, Legends that are not in Sheet";
+            CleanSheetPushButton.ToolTip = "Delete all Sheets";
             PurgeDimtypeButton.ToolTip = "Purge Dimension Type base on option provided";
             GroupsButton.ToolTip = "Purge groups in document";
             #endregion
@@ -74,6 +78,7 @@ namespace NodeTools.Ribbon
 
             #region Sett button image
             UnusedViewPushButton.LargeImage = UnUsedView_Image;
+            CleanSheetPushButton.LargeImage = CLeanSheet_Image;
             PurgeDimtypeButton.LargeImage = PurgeDimType_Image;
             GroupsButton.LargeImage = Groups_Image;
             #endregion
