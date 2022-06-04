@@ -89,6 +89,12 @@
       <DependentUpon>DeleteUnusedLineStyleUI.xaml</DependentUpon>
     </Compile>
     <Compile Include="Commands\CleanLines\DeleteUnuseLineStyleCommand.cs" />
+    <Compile Include="Commands\CleanSheets\CleanSheetsCommand.cs" />
+    <Compile Include="Commands\CleanUnusedFilters\CleanUnusedFilterUI.xaml.cs">
+      <DependentUpon>CleanUnusedFilterUI.xaml</DependentUpon>
+    </Compile>
+    <Compile Include="Commands\CleanUnusedFilters\CustomFilterObj.cs" />
+    <Compile Include="Commands\CleanUnusedFilters\DeleteUnusedFilterCommand.cs" />
     <Compile Include="Commands\CleanViews\DeleteUnusedViewsCommand.cs" />
     <Compile Include="Commands\CleanViews\DeletUnusedViewUI.xaml.cs">
       <DependentUpon>DeletUnusedViewUI.xaml</DependentUpon>
@@ -103,7 +109,6 @@
     <Compile Include="Commands\TextNoteTypes\TextNoteTypeCustomOBJ.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Ribbon\NodeRibbon.cs" />
-    <Compile Include="Test_Command.cs" />
     <Compile Include="Utility\Collector.cs" />
     <Compile Include="Utility\DimTypeEqualityComparer.cs" />
     <Compile Include="Utility\DwmDropShadow.cs" />
@@ -122,6 +127,10 @@
       <Generator>MSBuild:Compile</Generator>
     </Page>
     <Page Include="Commands\CleanLines\DeleteUnusedLineStyleUI.xaml">
+      <SubType>Designer</SubType>
+      <Generator>MSBuild:Compile</Generator>
+    </Page>
+    <Page Include="Commands\CleanUnusedFilters\CleanUnusedFilterUI.xaml">
       <SubType>Designer</SubType>
       <Generator>MSBuild:Compile</Generator>
     </Page>

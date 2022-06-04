@@ -28,17 +28,20 @@ namespace NodeTools.Commands.CleanDimension
             AllUsed_Dims = new DimensionProcessor(doc).DimsUsed;
             AllDocs_Dimtypes = new DimensionTypeProcessor(doc).DocDimTypes;
 
-            List<DimTypeCustomObj> list = AllDocs_Dimtypes.Select(x => new DimTypeCustomObj() { Name = x.Name, FamilyName = x.FamilyName, EleId = x.Id , UniqueId = x.UniqueId}).ToList();
-            list.Sort(new NameSortHelper());
 
-            ShowUi(commandData,list);
+            //get all dimension types in docs and 
+         
+
+            ShowUi(commandData);
 
             return Result.Succeeded;
         }
 
-        public void ShowUi(ExternalCommandData commandata,List<DimTypeCustomObj> docsDimtype)
+
+        //showing UI
+        public void ShowUi(ExternalCommandData commandata)
         {
-            DimensionCleanUpUI ui = new DimensionCleanUpUI(commandata.Application.ActiveUIDocument.Document,docsDimtype, AllUsed_Dims);
+            DimensionCleanUpUI ui = new DimensionCleanUpUI(commandata.Application.ActiveUIDocument.Document, AllDocs_Dimtypes, AllUsed_Dims);
             try
             {
                 HwndSource hwnd = HwndSource.FromHwnd(commandata.Application.MainWindowHandle);
@@ -51,9 +54,9 @@ namespace NodeTools.Commands.CleanDimension
                 }
 
             }
-            catch (Exception)
+            catch (Exception e)
             {
-                throw;
+                TaskDialog.Show("Error", e.Message);
             }
         }
 
